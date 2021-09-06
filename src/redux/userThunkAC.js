@@ -1,7 +1,7 @@
-import { userErrorAC, userLoadedAC } from "./userAC";
+import { userError, userLoaded } from "./userReducer";
 
 const TOKEN =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjNmMTdlNWMzY2IxNDVjMDQ1ZTk0ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYzMDg2Nzg0MSwiZXhwIjoxNjMwOTU0MjQxfQ.lsY8lJSU5k1A9c0I_5hoZj9R6lggxupjq1eQ6PAFseE";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjNmMTdlNWMzY2IxNDVjMDQ1ZTk0ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYzMDk1NTk0NCwiZXhwIjoxNjMxODM0MzQ0fQ.AXc0KhpkkR9d475zpfQVH1nXugZ1SJomyQ1uJBSerRw";
 
 function userThunkAC(dispatch) {
   return async function () {
@@ -10,12 +10,12 @@ function userThunkAC(dispatch) {
         headers: { Authorization: TOKEN },
       });
       const responseJSON = await response.json();
-      if (!response) {
-        dispatch(userErrorAC(responseJSON.err));
+      if (responseJSON.err) {
+        return dispatch(userError(responseJSON.err));
       }
-      dispatch(userLoadedAC(responseJSON.data));
+      return dispatch(userLoaded(responseJSON.data));
     } catch (err) {
-      dispatch(userErrorAC(err));
+      return dispatch(userError(err));
     }
   };
 }
