@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { userFetch } from "./redux/userReducer";
+import userFetch from "./store/user/userActions";
 
 const App = () => {
   const currentUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const sendUserRequest = () => {
-    dispatch(userFetch());
+    dispatch(userFetch(dispatch));
   };
 
   return (
