@@ -1,24 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const currentUserSlice = createSlice({
-  name: "currentUser",
+const userSlice = createSlice({
+  name: "user",
   initialState: {
     status: "no data",
     data: null,
     error: null,
   },
   reducers: {
-    userError(state, action) {
+    setUserError(state, action) {
       state.status = "error";
       state.data = null;
       console.log(action);
     },
-    userLoaded(state, action) {
+    setUserLoaded(state, action) {
       state.status = "success";
       state.data = action.payload;
     },
   },
 });
 
-export default currentUserSlice.reducer;
-export const { userError, userLoaded } = currentUserSlice.actions;
+export default userSlice.reducer;
+export const {
+  setUserLoaded: setUserLoadedAction,
+  setUserError: setUserErrorAction,
+} = userSlice.actions;

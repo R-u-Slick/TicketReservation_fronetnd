@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import userFetch from "./store/user/userActions";
+import userFetch from "./store/user/asyncActions";
 
 const App = () => {
   const currentUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  const sendUserRequest = () => {
-    dispatch(userFetch(dispatch));
-  };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Redux check</h1>
         <div>
-          <input type="button" value="Send" onClick={sendUserRequest} />
+          <input
+            type="button"
+            value="Send"
+            onClick={() => dispatch(userFetch())}
+          />
           <span>Send users/me request</span>
         </div>
         <div>
