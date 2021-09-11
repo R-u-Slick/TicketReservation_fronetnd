@@ -4,8 +4,7 @@ import {
   setUserStatusAction,
 } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
-const STATUS_ERROR = "error";
-const STATUS_SUCCESS = "success";
+import { STATUS_ERROR, STATUS_SUCCESS } from "../../constants/requests";
 
 function userFetch() {
   return async function (dispatch) {

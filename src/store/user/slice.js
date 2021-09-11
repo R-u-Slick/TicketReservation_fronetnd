@@ -10,7 +10,7 @@ const userSlice = createSlice({
   reducers: {
     setUserError(state, action) {
       state.data = null;
-      alert(action);
+      alert(action.payload);
     },
     setUser(state, action) {
       state.data = action.payload;

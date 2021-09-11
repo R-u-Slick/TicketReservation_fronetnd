@@ -1,5 +1,5 @@
 const TOKEN =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjNmMTdlNWMzY2IxNDVjMDQ1ZTk0ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYzMTA3NTkzNywiZXhwIjoxNjMxOTU0MzM3fQ.ncHTdnIJ7lAPQpPSoejkxfCMPqg1AN3xLP-kdsGIo9s";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjNmMTdlNWMzY2IxNDVjMDQ1ZTk0ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYzMTM2NzgzOSwiZXhwIjoxNjMyMjQ2MjM5fQ.Tyh_YBuE_crdvrdzQVT8HG9mcBH7VcGXHiAGc8Lx_20";
 const HOST = "http://localhost:3000";
 
 async function formatRequest(path) {
