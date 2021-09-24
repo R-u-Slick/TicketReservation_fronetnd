@@ -1,21 +1,32 @@
 import {
   setUserErrorAction,
   setUserAction,
-  setUserStatusAction,
 } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
 import { STATUS_ERROR, STATUS_SUCCESS } from "../../constants/requests";
 
-function userFetch() {
+const TOKEN =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjNmMTdlNWMzY2IxNDVjMDQ1ZTk0ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYzMTM2NzgzOSwiZXhwIjoxNjMyMjQ2MjM5fQ.Tyh_YBuE_crdvrdzQVT8HG9mcBH7VcGXHiAGc8Lx_20";
+
+export function userFetch() {
   return async function (dispatch) {
-    const response = await formatRequest("/users/me");
+    const response = await formatRequest("/users/me", "GET", TOKEN);
     if (response.error) {
-      dispatch(setUserStatusAction(STATUS_ERROR));
       return dispatch(setUserErrorAction(response.error));
     }
-    dispatch(setUserStatusAction(STATUS_SUCCESS));
     return dispatch(setUserAction(response.response.data));
   };
 }
 
-export default userFetch;
+export function userLogin(data) {
+  return async function (dispatch) {
+    const response = await formatRequest("/login", "POST", null, data);
+  if (response.error) {
+    return dispatch(setUserErrorAction(response.error));
+  }
+  localStorage.setItem('token', response.response.data.token);
+  return dispatch(setUserAction(response.response.data));
+  }
+}
+
+

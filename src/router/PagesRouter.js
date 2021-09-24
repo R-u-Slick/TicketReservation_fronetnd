@@ -1,21 +1,22 @@
 import { Route } from "react-router-dom";
 
 import Main from "../pages/Main";
-import Login from "../pages/Login";
-import Registration from "../pages/Registration";
+import LoginPage from "../pages/Login/LoginContainer";
+import Registration from "../pages/Registration/Registration";
 import Schedule from "../pages/Schedule";
 import Movies from "../pages/Movies";
 import Cinemas from "../pages/Cinemas";
+import React from "react";
 
 const PagesRouter = () => (
-  <div>
+  <React.Fragment>
     <Route exact path="/" component={Main} />
     <Route exact path="/schedule" component={Schedule} />
     <Route exact path="/movies" component={Movies} />
-    <Route exact path="/Cinemas" component={Cinemas} />
-    <Route exact path="/login" component={Login} />
+    <Route exact path="/cinemas" component={Cinemas} />
+    <Route exact path="/login" component={LoginPage} />
     <Route exact path="/registration" component={Registration} />
-  </div>
+  </React.Fragment>
 );
 
 export default PagesRouter;

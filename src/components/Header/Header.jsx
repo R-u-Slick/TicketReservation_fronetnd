@@ -1,4 +1,4 @@
-import "./Header.css";
+import "./Header.scss";
 import { NavLink } from "react-router-dom";
 
 const Header = () => (
@@ -21,7 +21,7 @@ const Header = () => (
           </NavLink>
         </li>
         <li className="navigation__element">
-          <NavLink to="/Cinemas" className="navigation__link">
+          <NavLink to="/cinemas" className="navigation__link">
             Cinemas
           </NavLink>
         </li>
