@@ -4,11 +4,10 @@ import { Container } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { CssBaseline } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { Grid } from "@material-ui/core";
 import { Box } from "@material-ui/system";
 import { Typography } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const theme = createTheme();
 
@@ -55,17 +54,18 @@ export default function Login(props) {
           >
             <TextField
               onChange={handleEmailChange}
+              value={email}
               margin="normal"
               required
               fullWidth
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
               autoFocus
             />
             <TextField
               onChange={handlePasswordChange}
+              value={password}
               margin="normal"
               required
               fullWidth
@@ -73,7 +73,6 @@ export default function Login(props) {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
             <Button
               type="submit"
@@ -93,11 +92,7 @@ export default function Login(props) {
               <NavLink to="/registration">
                 {"Don't have an account? Sign Up"}
               </NavLink>
-              {props.error && (
-                <div className="Login__error" style={{ color: "red" }}>
-                  {props.error}
-                </div>
-              )}
+              {props.error && <div style={{ color: "red" }}>{props.error}</div>}
             </Box>
           </Box>
         </Box>
@@ -105,3 +100,13 @@ export default function Login(props) {
     </ThemeProvider>
   );
 }
+
+Login.defaultProps = {
+  onSubmit: () => {},
+  error: null,
+};
+
+Login.propTypes = {
+  onSubmit: PropTypes.func,
+  error: PropTypes.string,
+};

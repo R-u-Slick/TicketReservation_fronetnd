@@ -1,34 +1,54 @@
 import * as React from "react";
 import { useState } from "react";
-import { Avatar } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { CssBaseline } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
-import { FormControlLabel } from "@material-ui/core";
-import { CheckBox } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { Box } from "@material-ui/system";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { createTheme, ThemeProvider } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 const theme = createTheme();
 
-export default function Registration() {
+export default function Registration({ error, onSubmit }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = React.useState("");
+  const [password, setPassword] = useState("");
+  const [city, setCity] = useState("");
+  const [role, setRole] = useState("");
+
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const data = { firstName, lastName, email, password, city, role };
+    onSubmit(data);
   };
 
   return (
@@ -55,6 +75,8 @@ export default function Registration() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={handleFirstNameChange}
+                  value={firstName}
                   autoComplete="fname"
                   name="firstName"
                   required
@@ -66,6 +88,7 @@ export default function Registration() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={handleLastNameChange}
                   required
                   fullWidth
                   id="lastName"
@@ -76,6 +99,7 @@ export default function Registration() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={handleEmailChange}
                   required
                   fullWidth
                   id="email"
@@ -86,6 +110,7 @@ export default function Registration() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={handlePasswordChange}
                   required
                   fullWidth
                   name="password"
@@ -97,6 +122,7 @@ export default function Registration() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={handleCityChange}
                   required
                   fullWidth
                   name="city"
@@ -104,6 +130,18 @@ export default function Registration() {
                   type="city"
                   id="city"
                   autoComplete="city"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={handleRoleChange}
+                  required
+                  fullWidth
+                  name="role"
+                  label="role"
+                  type="role"
+                  id="role"
+                  autoComplete="role"
                 />
               </Grid>
             </Grid>
@@ -122,9 +160,8 @@ export default function Registration() {
                 alignItems: "center",
               }}
             >
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <NavLink to="/login">Already have an account? Sign in</NavLink>
+              {error && <div style={{ color: "red" }}>error</div>}
             </Box>
           </Box>
         </Box>
@@ -132,3 +169,13 @@ export default function Registration() {
     </ThemeProvider>
   );
 }
+
+Registration.defaultProps = {
+  onSubmit: () => {},
+  error: null,
+};
+
+Registration.propTypes = {
+  onSubmit: PropTypes.func,
+  error: PropTypes.string,
+};

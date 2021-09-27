@@ -1,19 +1,45 @@
-import { useDispatch, useSelector } from "react-redux";
-import Login from "./Registration";
-import { userLogin } from "../../store/user/asyncActions";
-import { selectUserError } from "../../store/user/selectors";
+import Registration from "./Registration";
+import { useState } from "react";
+import formatRequest from "../../helpers/formatRequest";
+import { Redirect } from "react-router";
 
-const LoginContainer = () => {
-  const dispatch = useDispatch();
-  const userError = useSelector(selectUserError);
-  const onSubmit = (data) => {
-    dispatch(userLogin(data));
+const RegistrationContainer = () => {
+  const [error, setError] = useState("");
+  const [userCreated, setUserCreated] = useState(false);
+
+  const handleSubmit = async (data) => {
+    try {
+      if (
+        !data.firstName ||
+        !data.lastName ||
+        !email ||
+        !password ||
+        !city ||
+        !role
+      ) {
+        setError("Please fill all text fileds");
+        return;
+      }
+      const response = await formatRequest("/user", "POST", null, data);
+      if (response.error) {
+        setError(response.error);
+        return;
+      }
+      setUserCreated(true);
+    } catch (err) {
+      setError(err.message);
+    }
   };
+
   return (
-    <div className="Login">
-      <Login error={userError} onSubmit={onSubmit} />
+    <div className="Registration">
+      {userCreated ? (
+        <Redirect to="/login" />
+      ) : (
+        <Registration error={error} onSubmit={handleSubmit} />
+      )}
     </div>
   );
 };
 
-export default LoginContainer;
+export default RegistrationContainer;

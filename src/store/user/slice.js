@@ -20,7 +20,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const {
-  setUser: setUserAction,
-  setUserError: setUserErrorAction,
-} = userSlice.actions;
+export const { setUser: setUserAction, setUserError: setUserErrorAction } =
+  userSlice.actions;

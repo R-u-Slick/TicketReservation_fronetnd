@@ -12,9 +12,19 @@
       justify-content: space-between;
       line-height: 50px;
       .navigation__element {
+        text-align: center;
         font-style: normal;
         font-weight: 300;
         font-size: 24px;
+        &__user {
+          &__logout {
+            font-weight: 200;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+
         .navigation__logo {
           font-style: normal;
           font-weight: 500;

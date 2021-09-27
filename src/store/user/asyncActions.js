@@ -1,7 +1,4 @@
-import {
-  setUserErrorAction,
-  setUserAction,
-} from "./slice";
+import { setUserErrorAction, setUserAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
 import { STATUS_ERROR, STATUS_SUCCESS } from "../../constants/requests";
 
@@ -18,15 +15,11 @@ export function userFetch() {
   };
 }
 
-export function userLogin(data) {
+export function userRegistration(data) {
   return async function (dispatch) {
-    const response = await formatRequest("/login", "POST", null, data);
-  if (response.error) {
-    return dispatch(setUserErrorAction(response.error));
-  }
-  localStorage.setItem('token', response.response.data.token);
-  return dispatch(setUserAction(response.response.data));
-  }
+    const response = await formatRequest("/user", "POST", null, data);
+    if (response.error) {
+      return dispatch(setUserErrorAction(response.error));
+    }
+  };
 }
-
-

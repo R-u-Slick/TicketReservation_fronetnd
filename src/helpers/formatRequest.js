@@ -5,16 +5,14 @@ async function formatRequest(path, method, token, data) {
   try {
     const response = await fetch(url, {
       method,
-      headers: { 'Authorization': token, 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { Authorization: token, "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
     const responseJSON = await response.json();
-    if (responseJSON.err) {
-      return { response: null, error: responseJSON.err };
-    }
-    return { response: responseJSON, error: null };
+    console.log(responseJSON);
+    return responseJSON;
   } catch (err) {
-    return { response: null, error: err };
+    return { err };
   }
 }
 
