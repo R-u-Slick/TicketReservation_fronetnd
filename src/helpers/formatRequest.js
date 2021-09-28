@@ -9,7 +9,6 @@ async function formatRequest(path, method, token, data) {
       body: JSON.stringify(data),
     });
     const responseJSON = await response.json();
-    console.log(responseJSON);
     return responseJSON;
   } catch (err) {
     return { err };

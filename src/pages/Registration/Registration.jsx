@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
-import { Button } from "@material-ui/core";
+import { useState, useEffect } from "react";
+import { Button, InputLabel, MenuItem } from "@material-ui/core";
 import { CssBaseline } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -8,18 +8,23 @@ import { Box } from "@material-ui/system";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { createTheme, ThemeProvider } from "@material-ui/core";
+import { Select } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
 const theme = createTheme();
 
-export default function Registration({ error, onSubmit }) {
+export default function Registration({ error, onSubmit, cities }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("client");
+
+  useEffect(() => {
+    setCity(cities[0] ? cities[0]._id : "");
+  }, [cities]);
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -120,29 +125,34 @@ export default function Registration({ error, onSubmit }) {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  onChange={handleCityChange}
-                  required
-                  fullWidth
-                  name="city"
+              <Grid item xs={6}>
+                <InputLabel id="city-label">City</InputLabel>
+                <Select
+                  labelId="city-label"
+                  id="city-select"
+                  value={city}
                   label="City"
-                  type="city"
-                  id="city"
-                  autoComplete="city"
-                />
+                  onChange={handleCityChange}
+                >
+                  {cities.map((v) => (
+                    <MenuItem key={v._id} value={v._id}>
+                      {v.name}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
+              <Grid item xs={6}>
+                <InputLabel id="role-label">Role</InputLabel>
+                <Select
+                  labelId="role-label"
+                  id="role-select"
+                  value={role}
+                  label="Role"
                   onChange={handleRoleChange}
-                  required
-                  fullWidth
-                  name="role"
-                  label="role"
-                  type="role"
-                  id="role"
-                  autoComplete="role"
-                />
+                >
+                  <MenuItem value="client">Client</MenuItem>
+                  <MenuItem value="admin">Administrator</MenuItem>
+                </Select>
               </Grid>
             </Grid>
             <Button
@@ -161,7 +171,11 @@ export default function Registration({ error, onSubmit }) {
               }}
             >
               <NavLink to="/login">Already have an account? Sign in</NavLink>
-              {error && <div style={{ color: "red" }}>error</div>}
+              {error.map((v, i) => (
+                <div key={i} style={{ color: "red" }}>
+                  {v}
+                </div>
+              ))}
             </Box>
           </Box>
         </Box>
@@ -172,10 +186,12 @@ export default function Registration({ error, onSubmit }) {
 
 Registration.defaultProps = {
   onSubmit: () => {},
-  error: null,
+  error: [],
+  cities: [],
 };
 
 Registration.propTypes = {
   onSubmit: PropTypes.func,
-  error: PropTypes.string,
+  error: PropTypes.array,
+  cities: PropTypes.array,
 };
