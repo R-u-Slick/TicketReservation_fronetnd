@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import Login from "./Login";
-import { userLogin } from "../../store/user/asyncActions";
-import { selectUserData, selectUserError } from "../../store/user/selectors";
+import { selectUserData } from "../../store/user/selectors";
 import { Redirect } from "react-router";
 import { useState } from "react";
 import formatRequest from "../../helpers/formatRequest";
-import { setUserAction, setUserErrorAction } from "../../store/user/slice";
+import { setUserAction } from "../../store/user/slice";
 
 const LoginContainer = () => {
   const dispatch = useDispatch();

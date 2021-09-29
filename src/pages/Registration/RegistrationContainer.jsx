@@ -2,34 +2,21 @@ import Registration from "./Registration";
 import { useState, useEffect } from "react";
 import formatRequest from "../../helpers/formatRequest";
 import { Redirect } from "react-router";
+import { selectCityData } from "../../store/city/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { cityFetch } from "../../store/city/asyncActions";
 
 const RegistrationContainer = () => {
+  const dispatch = useDispatch();
   const [error, setError] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
-  const [citiesArray, setCitiesArray] = useState([]);
-
-  const getCitiesList = async () => {
-    try {
-      const response = await formatRequest("/city", "GET");
-      if (response.err) {
-        let errorsArray = [];
-        for (let key in response.err) {
-          errorsArray.push(response.err[key].message);
-        }
-        setError(errorsArray);
-        return;
-      }
-      console.log(response.data);
-      setCitiesArray(response.data);
-    } catch (err) {
-      setError([err.message]);
-    }
-  };
+  const citiesArray = useSelector(selectCityData);
 
   useEffect(() => {
-    getCitiesList();
+    dispatch(cityFetch());
   }, []);
 
+  //think of it
   const handleSubmit = async (data) => {
     try {
       if (

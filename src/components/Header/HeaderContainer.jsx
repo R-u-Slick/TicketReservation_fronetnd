@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import { selectUserData } from "../../store/user/selectors";
@@ -9,7 +9,7 @@ const HeaderContainer = () => {
   const userData = useSelector(selectUserData);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(userFetch());
+    dispatch(userFetch(), []);
   });
   const handleLogout = () => {
     dispatch(setUserAction(null));

@@ -1,15 +1,13 @@
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "@material-ui/core";
 
 const Header = ({ role, name, onLogout }) => {
   const handleLogout = () => {
     onLogout();
   };
   return (
-    <header className="Header">
+    <header className="header">
       <nav className="navigation">
         <ul className="navigation__menu">
           <li className="navigation__element">

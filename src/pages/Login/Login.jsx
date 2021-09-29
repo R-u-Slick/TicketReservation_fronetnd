@@ -8,10 +8,11 @@ import { Box } from "@material-ui/system";
 import { Typography } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { PropTypes } from "prop-types";
+import "./Login.scss";
 
 const theme = createTheme();
 
-export default function Login(props) {
+export default function Login({ error, onSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,12 +29,12 @@ export default function Login(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = { email, password };
-    props.onSubmit(data);
+    onSubmit(data);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className="login">
         <CssBaseline />
         <Box
           sx={{
@@ -90,9 +91,9 @@ export default function Login(props) {
               }}
             >
               <NavLink to="/registration">
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
               </NavLink>
-              {props.error && <div style={{ color: "red" }}>{props.error}</div>}
+              {error && <div className="error">{error}</div>}
             </Box>
           </Box>
         </Box>

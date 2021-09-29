@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 import { Select } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { PropTypes } from "prop-types";
+import "./Registration.scss";
 
 const theme = createTheme();
 
@@ -58,7 +59,7 @@ export default function Registration({ error, onSubmit, cities }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className="registration">
         <CssBaseline />
         <Box
           sx={{
@@ -133,10 +134,11 @@ export default function Registration({ error, onSubmit, cities }) {
                   value={city}
                   label="City"
                   onChange={handleCityChange}
+                  sx={{ width: "100%" }}
                 >
-                  {cities.map((v) => (
-                    <MenuItem key={v._id} value={v._id}>
-                      {v.name}
+                  {cities.map((cityItem) => (
+                    <MenuItem key={cityItem._id} value={cityItem._id}>
+                      {cityItem.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -149,6 +151,7 @@ export default function Registration({ error, onSubmit, cities }) {
                   value={role}
                   label="Role"
                   onChange={handleRoleChange}
+                  sx={{ width: "100%" }}
                 >
                   <MenuItem value="client">Client</MenuItem>
                   <MenuItem value="admin">Administrator</MenuItem>
@@ -171,9 +174,9 @@ export default function Registration({ error, onSubmit, cities }) {
               }}
             >
               <NavLink to="/login">Already have an account? Sign in</NavLink>
-              {error.map((v, i) => (
-                <div key={i} style={{ color: "red" }}>
-                  {v}
+              {error.map((errorMessage) => (
+                <div key={errorMessage} className="error">
+                  {errorMessage}
                 </div>
               ))}
             </Box>
