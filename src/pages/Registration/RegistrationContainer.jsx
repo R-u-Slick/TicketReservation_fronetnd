@@ -13,7 +13,7 @@ const RegistrationContainer = () => {
   const citiesArray = useSelector(selectCityData);
 
   useEffect(() => {
-    dispatch(cityFetch());
+    dispatch(cityFetch(citiesArray));
   }, []);
 
   //think of it
@@ -46,7 +46,7 @@ const RegistrationContainer = () => {
   };
 
   return (
-    <div className="Registration">
+    <div className="registration">
       {userCreated ? (
         <Redirect to="/login" />
       ) : (

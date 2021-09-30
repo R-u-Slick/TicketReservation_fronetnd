@@ -31,7 +31,7 @@ const LoginContainer = () => {
   };
 
   return (
-    <div className="Login">
+    <div className="login">
       {userData ? (
         <Redirect to="/" />
       ) : (

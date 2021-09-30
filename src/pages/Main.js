@@ -5,7 +5,7 @@ import { userFetch } from "../store/user/asyncActions";
 
 const Main = () => {
   return (
-    <div className="Main">
+    <div className="main">
       <Header />
       <h1>Main page</h1>
     </div>

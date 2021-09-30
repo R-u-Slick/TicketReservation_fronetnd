@@ -1,7 +1,7 @@
 import Header from "../components/Header/HeaderContainer";
 
 const Schedule = () => (
-  <div className="Main">
+  <div className="schedule">
     <Header />
     <h1>Schedule</h1>
   </div>
