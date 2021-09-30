@@ -9,8 +9,8 @@ const HeaderContainer = () => {
   const userData = useSelector(selectUserData);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(userFetch(), []);
-  });
+    dispatch(userFetch());
+  }, []);
   const handleLogout = () => {
     dispatch(setUserAction(null));
     localStorage.removeItem("token");
