@@ -1,0 +1,44 @@
+.header {
+  font-family: Roboto, sans-serif;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  .navigation {
+    margin: 0 auto;
+    width: 90%;
+    .navigation__menu {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      line-height: 50px;
+      .navigation__element {
+        text-align: center;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 24px;
+        &__user {
+          &__logout {
+            font-weight: 200;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+
+        .navigation__logo {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 50px;
+        }
+        a {
+          text-decoration: none;
+          color: black;
+          &:hover {
+            color: black;
+            color: #e10050;
+          }
+        }
+      }
+    }
+  }
+}

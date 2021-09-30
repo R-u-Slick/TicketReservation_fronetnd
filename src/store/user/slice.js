@@ -10,20 +10,15 @@ const userSlice = createSlice({
   reducers: {
     setUserError(state, action) {
       state.data = null;
-      alert(action.payload);
+      state.error = action.payload;
     },
     setUser(state, action) {
       state.data = action.payload;
-    },
-    setUserStatus(state, action) {
-      state.status = action.payload;
+      state.error = null;
     },
   },
 });
 
 export default userSlice.reducer;
-export const {
-  setUser: setUserAction,
-  setUserError: setUserErrorAction,
-  setUserStatus: setUserStatusAction,
-} = userSlice.actions;
+export const { setUser: setUserAction, setUserError: setUserErrorAction } =
+  userSlice.actions;

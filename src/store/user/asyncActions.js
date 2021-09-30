@@ -1,21 +1,13 @@
-import {
-  setUserErrorAction,
-  setUserAction,
-  setUserStatusAction,
-} from "./slice";
+import { setUserErrorAction, setUserAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
-import { STATUS_ERROR, STATUS_SUCCESS } from "../../constants/requests";
 
-function userFetch() {
+export function userFetch() {
+  const token = localStorage.getItem("token");
   return async function (dispatch) {
-    const response = await formatRequest("/users/me");
-    if (response.error) {
-      dispatch(setUserStatusAction(STATUS_ERROR));
-      return dispatch(setUserErrorAction(response.error));
+    const response = await formatRequest("/users/me", "GET", token);
+    if (response.err) {
+      return dispatch(setUserErrorAction(response.err));
     }
-    dispatch(setUserStatusAction(STATUS_SUCCESS));
-    return dispatch(setUserAction(response.response.data));
+    return dispatch(setUserAction(response.data));
   };
 }
-
-export default userFetch;
