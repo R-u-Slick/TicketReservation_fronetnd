@@ -6,7 +6,7 @@ import { selectCityData } from "./selectors";
 // eslint-disable-next-line import/prefer-default-export
 export function cityFetch(citiesArray) {
   if (citiesArray[0]) {
-    return;
+    return { type: null };
   }
   return async function (dispatch) {
     try {
