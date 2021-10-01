@@ -5,7 +5,7 @@ import LoginPage from "../pages/Login/LoginContainer";
 import RegistrationPage from "../pages/Registration/RegistrationContainer";
 import Schedule from "../pages/Schedule";
 import Movies from "../pages/Movies";
-import Cinemas from "../pages/Cinemas";
+import Cinemas from "../pages/Cinemas/CinemasContainer";
 import FilmInfoContainer from "../pages/FilmInfo/FilmInfoContainer";
 import React from "react";
 import { Switch, Redirect } from "react-router-dom";

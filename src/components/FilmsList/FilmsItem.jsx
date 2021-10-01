@@ -14,9 +14,6 @@ import { useHistory } from "react-router";
 
 const FilmsItem = ({ film }) => {
   const history = useHistory();
-  const handleLogout = () => {
-    onLogout();
-  };
   return (
     <Grid item xs={3} md={4}>
       <Card>
@@ -31,7 +28,7 @@ const FilmsItem = ({ film }) => {
           <Typography variant="h6" component="h3">
             {film.name}
           </Typography>
-          <Typography variant="body1">Genre: {film.genreId.name}</Typography>
+          <Typography variant="body1">Genre: {film.genre.name}</Typography>
           <Typography variant="body1">
             Duration: {film.duration} minutes
           </Typography>

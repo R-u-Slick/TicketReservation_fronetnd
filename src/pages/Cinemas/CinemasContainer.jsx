@@ -1,19 +1,18 @@
 import React from "react";
-import FilmInfo from "./FilmInfo";
+import Cinemas from "./Cinemas";
 import Header from "../../components/Header/Header";
 import { useSelector } from "react-redux";
 import { selectFilmData } from "../../store/film/selectors";
 import { Grid, Typography } from "@material-ui/core";
 
-const FilmInfoContainer = ({ match }) => {
+const CinemasContainer = () => {
   const filmsArray = useSelector(selectFilmData);
-  const selectedFilm = filmsArray.find((film) => film._id === match.params.id);
   return (
     <>
       <Header />
-      <FilmInfo selectedFilm={selectedFilm} />
+      <Cinemas />
     </>
   );
 };
 
-export default FilmInfoContainer;
+export default CinemasContainer;
