@@ -8,7 +8,6 @@ export function filmFetch(filmsArray) {
   if (filmsArray[0]) {
     return { type: null };
   }
-  console.log(filmsArray);
   return async function (dispatch) {
     try {
       const response = await formatRequest("/film", "GET");
