@@ -1,3 +1,4 @@
+import React from "react";
 import "./FilmsList.scss";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -11,11 +12,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 const FilmsItem = ({ film }) => {
-  const history = useHistory();
   return (
-    <Grid item xs={3} md={4}>
+    <Grid item xs={3} md={4} className="filmsItem">
       <Card>
         <CardMedia
           image={film.image}
@@ -34,14 +35,9 @@ const FilmsItem = ({ film }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button
-            variant="contained"
-            onClick={() => {
-              history.push(`/films/${film._id}`);
-            }}
-          >
-            More info
-          </Button>
+          <Link to={`/films/${film._id}`} className="button">
+            <Button variant="contained">More info</Button>
+          </Link>
         </CardActions>
       </Card>
     </Grid>

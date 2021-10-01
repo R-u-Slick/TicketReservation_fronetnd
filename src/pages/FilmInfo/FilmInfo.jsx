@@ -1,6 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { Grid, Typography, Container } from "@material-ui/core";
+import "./FilmInfo.scss";
 
 const FilmInfo = ({ selectedFilm }) => {
   return (
@@ -8,17 +9,15 @@ const FilmInfo = ({ selectedFilm }) => {
       sx={{
         mt: "2rem",
       }}
+      className="filmInfo"
     >
-      <Grid container spacing={2} mt={"3rem"}>
+      <Grid container spacing={2} mt="3rem">
         <Grid item xs={4}>
-          <img
-            src={selectedFilm.image}
-            style={{ width: "100%", borderRadius: "5px" }}
-          />
+          <img src={selectedFilm.image} className="image" />
         </Grid>
         <Grid item xs={8}>
           <Typography variant="h2">{selectedFilm.name}</Typography>
-          <Typography variant="h5" mt={"1rem"}>
+          <Typography variant="h5" mt="1rem">
             {selectedFilm.genre.name}
           </Typography>
           <Typography variant="h5">{selectedFilm.duration} minutes</Typography>
@@ -31,7 +30,7 @@ const FilmInfo = ({ selectedFilm }) => {
               return ` ${actor.firstName} ${actor.lastName}, `;
             })}
           </Typography>
-          <Typography variant="body1" mt={"2rem"}>
+          <Typography variant="body1" mt="2rem">
             {selectedFilm.description}
           </Typography>
         </Grid>

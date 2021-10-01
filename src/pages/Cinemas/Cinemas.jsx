@@ -9,18 +9,18 @@ const Cinemas = () => {
         mt: "2rem",
       }}
     >
-      <Grid container spacing={2} mt={"3rem"}>
+      <Grid container spacing={2} mt="3rem">
         <Grid item xs={4}>
-          <img src="" style={{ width: "100%", borderRadius: "5px" }} />
+          <img src="" />
         </Grid>
         <Grid item xs={8}>
           <Typography variant="h2">Cinema name</Typography>
-          <Typography variant="h5" mt={"1rem"}>
+          <Typography variant="h5" mt="1rem">
             Cinema name
           </Typography>
           <Typography variant="h5">minutes</Typography>
           <Typography variant="h5">Starring:</Typography>
-          <Typography variant="body1" mt={"2rem"}>
+          <Typography variant="body1" mt="2rem">
             description
           </Typography>
         </Grid>
