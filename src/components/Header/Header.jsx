@@ -34,13 +34,11 @@ const Header = ({ role, name, onLogout }) => {
             {role ? (
               <div className="navigation__element__user">
                 <div>{"Hello, " + name}</div>
-                <div>
-                  <a
-                    className="navigation__element__user__logout"
-                    onClick={handleLogout}
-                  >
-                    Log out
-                  </a>
+                <div className="navigation__element__user__role">
+                  logged as {role}
+                </div>
+                <div className="navigation__element__user__logout">
+                  <a onClick={handleLogout}>Log out</a>
                 </div>
               </div>
             ) : (
