@@ -1,7 +1,5 @@
 import { setFilmAction, setFilmErrorAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
-import { useSelector } from "react-redux";
-import { selectFilmData } from "./selectors";
 
 // eslint-disable-next-line import/prefer-default-export
 export function filmFetch(filmsArray) {

@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Grid, Typography } from "@material-ui/core";
 import FilmsItem from "./FilmsItem";
 import { selectFilmData } from "../../store/film/selectors";
 import { filmFetch } from "../../store/film/asyncActions";
-import { Grid, Typography } from "@material-ui/core";
-import { Box } from "@material-ui/system";
 import "./FilmsList.scss";
 
 const FilmsList = () => {
