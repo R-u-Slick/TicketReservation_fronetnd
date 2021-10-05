@@ -19,12 +19,12 @@ const Cinemas = ({ cinema, role }) => {
         </Typography>
         <Stack mt="1rem" spacing={2} direction="row">
           <Link to={`/schedule/${cinema._id}`} className="cinemas__button">
-            <Button variant="outlined" href="schedule">
+            <Button variant="outlined">
               {role === ADMIN ? "Edit schedule" : "View schedule"}
             </Button>
           </Link>
           <Link to={`/halls/${cinema._id}`} className="cinemas__button">
-            <Button variant="outlined" href="schedule">
+            <Button variant="outlined">
               {role === ADMIN ? "Edit halls" : "View halls"}
             </Button>
           </Link>

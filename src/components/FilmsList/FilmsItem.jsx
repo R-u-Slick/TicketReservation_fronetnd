@@ -11,7 +11,6 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
 const FilmsItem = ({ film }) => {

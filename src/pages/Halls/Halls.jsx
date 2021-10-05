@@ -11,10 +11,13 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import "./Halls.scss";
-import HallView from "../../components/HallView/HallViewContainer";
+import HallView from "../../components/HallView/HallView";
 
 const Halls = ({ selectedCinema }) => {
   const [currentHallId, setCurrentHallId] = useState("");
+  let currentHall = selectedCinema.halls.find(
+    (hall) => hall._id === currentHallId
+  );
   const handleHallChange = (event) => {
     setCurrentHallId(event.target.value);
   };
@@ -56,7 +59,7 @@ const Halls = ({ selectedCinema }) => {
           </FormControl>
         </Grid>
         <Grid item xs={10}>
-          <HallView />
+          {currentHall && <HallView hall={currentHall} />}
         </Grid>
       </Grid>
     </Container>
