@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { selectFilmData } from "../../store/film/selectors";
 
 const FilmInfoContainer = ({ match }) => {
-  const filmsArray = useSelector(selectFilmData);
-  const selectedFilm = filmsArray.find((film) => film._id === match.params.id);
+  const filmsList = useSelector(selectFilmData);
+  const selectedFilm = filmsList.find((film) => film._id === match.params.id);
   return (
     <>
       <Header />

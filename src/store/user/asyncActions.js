@@ -1,7 +1,7 @@
 import { setUserErrorAction, setUserAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
 
-export function userFetch(userData) {
+export function userFetch() {
   const token = localStorage.getItem("token");
   if (!token) {
     return { type: null };

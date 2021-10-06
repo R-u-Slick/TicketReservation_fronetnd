@@ -7,10 +7,10 @@ import { filmFetch } from "../../store/film/asyncActions";
 import "./FilmsList.scss";
 
 const FilmsList = () => {
-  const filmsArray = useSelector(selectFilmData);
+  const filmsList = useSelector(selectFilmData);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(filmFetch(filmsArray));
+    dispatch(filmFetch(filmsList));
   }, []);
 
   return (
@@ -18,7 +18,7 @@ const FilmsList = () => {
       <Grid item xs={12}>
         <Typography variant="h4">Now in theatres</Typography>
       </Grid>
-      {filmsArray.map((film) => (
+      {filmsList.map((film) => (
         <FilmsItem key={film._id} film={film} />
       ))}
     </Grid>

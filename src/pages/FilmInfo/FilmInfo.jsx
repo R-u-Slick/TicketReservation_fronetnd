@@ -9,7 +9,7 @@ const FilmInfo = ({ selectedFilm }) => {
       sx={{
         mt: "2rem",
       }}
-      className="filmInfo"
+      className="film-info"
     >
       <Grid container spacing={2} mt="3rem">
         <Grid item xs={4}>

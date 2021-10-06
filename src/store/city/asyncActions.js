@@ -1,12 +1,14 @@
 import { setCityAction, setCityErrorAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
+import { selectCityData } from "../../store/city/selectors";
 
-// eslint-disable-next-line import/prefer-default-export
-export function cityFetch(citiesArray) {
-  if (citiesArray[0]) {
-    return { type: null };
-  }
-  return async function (dispatch) {
+export function cityFetch() {
+  return async function (dispatch, getState) {
+    const state = getState();
+    const citiesList = selectCityData(state);
+    if (citiesList.length) {
+      return { type: null };
+    }
     try {
       const response = await formatRequest("/city", "GET");
       if (response.err) {

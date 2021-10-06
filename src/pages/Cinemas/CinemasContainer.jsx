@@ -14,31 +14,32 @@ import Cinemas from "./Cinemas";
 import { selectCinemaData } from "../../store/cinema/selectors";
 import { selectCityData } from "../../store/city/selectors";
 import { selectUserData } from "../../store/user/selectors";
-import { cinemaFetch } from "../../store/cinema/asyncActions";
+import cinemaFetch from "../../store/cinema/asyncActions";
 import { cityFetch } from "../../store/city/asyncActions";
 import Header from "../../components/Header/HeaderContainer";
 
 const CinemasContainer = () => {
   const userData = useSelector(selectUserData);
-  const cinemasArray = useSelector(selectCinemaData);
-  const citiesArray = useSelector(selectCityData);
+  const cinemasList = useSelector(selectCinemaData);
+  const citiesList = useSelector(selectCityData);
   const [currentCityId, setCurrentCityId] = useState("");
-  const [filteredCinemas, setFilteredCinemas] = useState(cinemasArray);
+  const [filteredCinemas, setFilteredCinemas] = useState(cinemasList);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(cinemaFetch(cinemasArray));
-    dispatch(cityFetch(citiesArray));
+    dispatch(cinemaFetch());
+    dispatch(cityFetch());
   }, []);
-  useEffect(() => {
-    if (!currentCityId) {
-      return setFilteredCinemas(cinemasArray);
-    }
-    setFilteredCinemas(
-      cinemasArray.filter((cinema) => cinema.city._id === currentCityId)
-    );
-  }, [currentCityId]);
+
   const handleCityChange = (event) => {
     setCurrentCityId(event.target.value);
+    if (!event.target.value) {
+      setFilteredCinemas(cinemasList);
+      return;
+    }
+    setFilteredCinemas(
+      cinemasList.filter((cinema) => cinema.city._id === event.target.value)
+    );
   };
   return (
     <>
@@ -65,7 +66,7 @@ const CinemasContainer = () => {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {citiesArray.map((city) => {
+                {citiesList.map((city) => {
                   return (
                     <MenuItem key={city._id} value={city._id}>
                       {city.name}

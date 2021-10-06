@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 const FilmsItem = ({ film }) => {
   return (
-    <Grid item xs={3} md={4} className="filmsItem">
+    <Grid item xs={3} md={4} className="films-item">
       <Card>
         <CardMedia
           image={film.image}

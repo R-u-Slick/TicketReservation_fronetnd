@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { selectCinemaData } from "../../store/cinema/selectors";
 
 const HallsContainer = ({ match }) => {
-  const cinemasArray = useSelector(selectCinemaData);
-  const selectedCinema = cinemasArray.find(
+  const cinemasList = useSelector(selectCinemaData);
+  const selectedCinema = cinemasList.find(
     (cinema) => cinema._id === match.params.id
   );
   return (

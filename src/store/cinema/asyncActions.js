@@ -1,12 +1,14 @@
 import { setCinemaAction, setCinemaErrorAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
+import { selectCinemaData } from "../../store/cinema/selectors";
 
-// eslint-disable-next-line import/prefer-default-export
-export function cinemaFetch(cinemasArray) {
-  if (cinemasArray[0]) {
-    return { type: null };
-  }
-  return async function (dispatch) {
+function cinemaFetch() {
+  return async function (dispatch, getState) {
+    const state = getState();
+    const cinemasList = selectCinemaData(state);
+    if (cinemasList.length) {
+      return { type: null };
+    }
     try {
       const response = await formatRequest("/cinema", "GET");
       if (response.err) {
@@ -18,3 +20,5 @@ export function cinemaFetch(cinemasArray) {
     }
   };
 }
+
+export default cinemaFetch;

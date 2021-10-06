@@ -59,6 +59,9 @@ const Halls = ({ selectedCinema }) => {
           </FormControl>
         </Grid>
         <Grid item xs={10}>
+          <Typography variant="h4">
+            {currentHall ? currentHall.name : ""}
+          </Typography>
           {currentHall && <HallView hall={currentHall} />}
         </Grid>
       </Grid>

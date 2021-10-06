@@ -19,6 +19,8 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "linebreak-style": 0,
+    "import/prefer-default-export": "off",
+    "arrow-body-style": "off",
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
   },
 };

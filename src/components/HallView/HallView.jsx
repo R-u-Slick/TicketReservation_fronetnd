@@ -1,11 +1,13 @@
-import { Container, Typography, Box } from "@material-ui/core";
+import { Container, Typography, Box, IconButton } from "@material-ui/core";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { PropTypes } from "prop-types";
 
-// eslint-disable-next-line arrow-body-style
 const HallView = ({ hall }) => {
+  const handleDelete = (event) => {
+    console.log(event.target.id);
+  };
   return (
     <Container>
-      <Typography variant="h4">{hall.name}</Typography>
       <Box
         sx={{
           display: "flex",
@@ -22,7 +24,20 @@ const HallView = ({ hall }) => {
             flexDirection: "row",
           }}
         >
-          <Box></Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+            mr="1rem"
+          >
+            {hall.plan.map((row, index) => (
+              <Typography variant="h6" sx={{ margin: "0.2rem" }}>
+                {index + 1}
+              </Typography>
+            ))}
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -37,16 +52,39 @@ const HallView = ({ hall }) => {
                     return (
                       <Box
                         sx={{
-                          margin: "0.15rem",
+                          margin: "0.2rem",
                           background: seat.color,
                           width: `${2 * seat.capacity}rem`,
                           height: "2rem",
-                          borderRadius: seat.capacity > 1 ? "40%" : "50%",
+                          borderRadius: seat.capacity > 1 ? "1rem" : "50%",
                         }}
                       />
                     );
                   })}
                 </Box>
+              );
+            })}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+            ml="1rem"
+          >
+            {hall.plan.map((seat, index) => {
+              return (
+                <IconButton
+                  id={index}
+                  aria-label="delete"
+                  size="medium"
+                  onClick={handleDelete}
+                >
+                  <DeleteIcon
+                    fontSize="inherit"
+                    sx={{ color: "#E10050", margin: "-0.05rem" }}
+                  />
+                </IconButton>
               );
             })}
           </Box>
