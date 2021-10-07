@@ -9,6 +9,7 @@ import Cinemas from "../pages/Cinemas/CinemasContainer";
 import FilmInfoContainer from "../pages/FilmInfo/FilmInfoContainer";
 import React from "react";
 import { Switch, Redirect } from "react-router-dom";
+import HallsContainer from "../pages/Halls/HallsContainer";
 
 const PagesRouter = () => (
   <React.Fragment>
@@ -16,6 +17,7 @@ const PagesRouter = () => (
       <Route exact path="/" component={Main} />
       <Route exact path="/schedule" component={Schedule} />
       <Route path="/films/:id" component={FilmInfoContainer} />
+      <Route path="/halls/:id" component={HallsContainer} />
       <Route exact path="/movies" component={Movies} />
       <Route exact path="/cinemas" component={Cinemas} />
       <Route exact path="/login" component={LoginPage} />

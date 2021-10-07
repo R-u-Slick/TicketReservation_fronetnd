@@ -10,10 +10,10 @@ const RegistrationContainer = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState([]);
   const [userCreated, setUserCreated] = useState(false);
-  const citiesArray = useSelector(selectCityData);
+  const citiesList = useSelector(selectCityData);
 
   useEffect(() => {
-    dispatch(cityFetch(citiesArray));
+    dispatch(cityFetch());
   }, []);
 
   //think of it
@@ -32,11 +32,11 @@ const RegistrationContainer = () => {
       }
       const response = await formatRequest("/user", "POST", null, data);
       if (response.err) {
-        let errorsArray = [];
+        let errorsList = [];
         for (let key in response.err) {
-          errorsArray.push(response.err[key].message);
+          errorsList.push(response.err[key].message);
         }
-        setError(errorsArray);
+        setError(errorsList);
         return;
       }
       setUserCreated(true);
@@ -53,7 +53,7 @@ const RegistrationContainer = () => {
         <Registration
           error={error}
           onSubmit={handleSubmit}
-          cities={citiesArray}
+          cities={citiesList}
         />
       )}
     </div>

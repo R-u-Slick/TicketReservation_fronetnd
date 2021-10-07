@@ -1,14 +1,15 @@
 import { setFilmAction, setFilmErrorAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
-import { useSelector } from "react-redux";
-import { selectFilmData } from "./selectors";
+import { selectFilmData } from "../../store/film/selectors";
 
-// eslint-disable-next-line import/prefer-default-export
-export function filmFetch(filmsArray) {
-  if (filmsArray[0]) {
-    return { type: null };
-  }
-  return async function (dispatch) {
+export function filmFetch() {
+  return async function (dispatch, getState) {
+    const state = getState();
+    const filmsList = selectFilmData(state);
+    if (filmsList.length) {
+      return { type: null };
+    }
+
     try {
       const response = await formatRequest("/film", "GET");
       if (response.err) {
