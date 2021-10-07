@@ -14,7 +14,7 @@ import Cinemas from "./Cinemas";
 import { selectCinemaData } from "../../store/cinema/selectors";
 import { selectCityData } from "../../store/city/selectors";
 import { selectUserData } from "../../store/user/selectors";
-import cinemaFetch from "../../store/cinema/asyncActions";
+import { cinemaFetch } from "../../store/cinema/asyncActions";
 import { cityFetch } from "../../store/city/asyncActions";
 import Header from "../../components/Header/HeaderContainer";
 

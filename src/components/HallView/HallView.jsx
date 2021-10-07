@@ -5,16 +5,12 @@ import { useState, useEffect } from "react";
 import { ADMIN, CLIENT } from "../../constants/roles";
 import HallEdit from "../../components/HallEdit/HallEdit";
 
-const HallView = ({ hall, role }) => {
-  const [currentHall, setCurrentHall] = useState(hall);
-  const handleDelete = (event) => {
-    const editedPlan = [...currentHall.plan];
-    editedPlan.splice(event.currentTarget.id, 1);
-    setCurrentHall({ ...currentHall, plan: editedPlan });
+const HallView = ({ plan, role, onDeleteRow }) => {
+  const handleDeleteRow = (event) => {
+    const deletedRowId = event.currentTarget.id;
+    onDeleteRow(deletedRowId);
   };
-  useEffect(() => {
-    setCurrentHall(hall);
-  }, [hall]);
+
   return (
     <Container>
       <Box
@@ -41,8 +37,8 @@ const HallView = ({ hall, role }) => {
             }}
             mr="1rem"
           >
-            {currentHall.plan.map((row, index) => (
-              <Typography variant="h6" sx={{ margin: "0.2rem" }}>
+            {plan.map((row, index) => (
+              <Typography key={index} variant="h6" sx={{ margin: "0.2rem" }}>
                 {index + 1}
               </Typography>
             ))}
@@ -54,7 +50,7 @@ const HallView = ({ hall, role }) => {
               flexDirection: "column",
             }}
           >
-            {currentHall.plan.map((row) => {
+            {plan.map((row) => {
               return (
                 <Box sx={{ display: "inline-flex" }}>
                   {row.map((seat) => {
@@ -82,12 +78,12 @@ const HallView = ({ hall, role }) => {
               }}
               ml="1rem"
             >
-              {currentHall.plan.map((seat, index) => {
+              {plan.map((seat, index) => {
                 return (
                   <IconButton
                     aria-label="delete"
                     size="medium"
-                    onClick={handleDelete}
+                    onClick={handleDeleteRow}
                     id={index}
                   >
                     <DeleteIcon
@@ -109,11 +105,11 @@ const HallView = ({ hall, role }) => {
           }}
         >
           <Typography variant="body1" mt="2rem">
-            Total rows: {currentHall.plan.length}
+            Total rows: {plan.length}
           </Typography>
           <Typography variant="body1" mt="2rem">
             Total seats:
-            {currentHall.plan.reduce((result, row) => result + row.length, 0)}
+            {plan.reduce((result, row) => result + row.length, 0)}
           </Typography>
         </Box>
       </Box>
@@ -122,13 +118,15 @@ const HallView = ({ hall, role }) => {
 };
 
 HallView.defaultProps = {
-  hall: [],
+  plan: [],
   role: null,
+  onDeleteRow: () => {},
 };
 
 HallView.propTypes = {
-  hall: PropTypes.object,
+  plan: PropTypes.array,
   role: PropTypes.string,
+  onDeleteRow: PropTypes.func,
 };
 
 export default HallView;
