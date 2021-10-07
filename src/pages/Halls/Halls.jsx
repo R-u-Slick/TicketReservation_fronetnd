@@ -12,8 +12,10 @@ import {
 } from "@material-ui/core";
 import "./Halls.scss";
 import HallView from "../../components/HallView/HallView";
+import HallEdit from "../../components/HallEdit/HallEdit";
+import { ADMIN, CLIENT } from "../../constants/roles";
 
-const Halls = ({ selectedCinema }) => {
+const Halls = ({ selectedCinema, role, seats }) => {
   const [currentHallId, setCurrentHallId] = useState("");
   let currentHall = selectedCinema.halls.find(
     (hall) => hall._id === currentHallId
@@ -21,6 +23,7 @@ const Halls = ({ selectedCinema }) => {
   const handleHallChange = (event) => {
     setCurrentHallId(event.target.value);
   };
+  console.log(seats);
   return (
     <Container
       sx={{
@@ -31,7 +34,7 @@ const Halls = ({ selectedCinema }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h2">
-            {selectedCinema.name} - hall view
+            {selectedCinema.name} - {role === ADMIN ? "hall edit" : "hall view"}
           </Typography>
         </Grid>
         <Grid item xs={2}>
@@ -62,7 +65,11 @@ const Halls = ({ selectedCinema }) => {
           <Typography variant="h4">
             {currentHall ? currentHall.name : ""}
           </Typography>
-          {currentHall && <HallView hall={currentHall} />}
+          {currentHall && <HallView hall={currentHall} role={role} />}
+        </Grid>
+        <Grid item xs={2} />
+        <Grid item xs={10}>
+          {currentHallId && <HallEdit seats={seats} />}
         </Grid>
       </Grid>
     </Container>
@@ -71,10 +78,14 @@ const Halls = ({ selectedCinema }) => {
 
 Halls.defaultProps = {
   selectedCinema: {},
+  role: "",
+  seats: [],
 };
 
 Halls.propTypes = {
   selectedCinema: PropTypes.object,
+  role: PropTypes.string,
+  seats: PropTypes.array,
 };
 
 export default Halls;

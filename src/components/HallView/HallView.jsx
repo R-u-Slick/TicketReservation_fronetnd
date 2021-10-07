@@ -1,11 +1,20 @@
 import { Container, Typography, Box, IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PropTypes } from "prop-types";
+import { useState, useEffect } from "react";
+import { ADMIN, CLIENT } from "../../constants/roles";
+import HallEdit from "../../components/HallEdit/HallEdit";
 
-const HallView = ({ hall }) => {
+const HallView = ({ hall, role }) => {
+  const [currentHall, setCurrentHall] = useState(hall);
   const handleDelete = (event) => {
-    console.log(event.target.id);
+    const editedPlan = [...currentHall.plan];
+    editedPlan.splice(event.currentTarget.id, 1);
+    setCurrentHall({ ...currentHall, plan: editedPlan });
   };
+  useEffect(() => {
+    setCurrentHall(hall);
+  }, [hall]);
   return (
     <Container>
       <Box
@@ -32,7 +41,7 @@ const HallView = ({ hall }) => {
             }}
             mr="1rem"
           >
-            {hall.plan.map((row, index) => (
+            {currentHall.plan.map((row, index) => (
               <Typography variant="h6" sx={{ margin: "0.2rem" }}>
                 {index + 1}
               </Typography>
@@ -45,7 +54,7 @@ const HallView = ({ hall }) => {
               flexDirection: "column",
             }}
           >
-            {hall.plan.map((row) => {
+            {currentHall.plan.map((row) => {
               return (
                 <Box sx={{ display: "inline-flex" }}>
                   {row.map((seat) => {
@@ -65,29 +74,31 @@ const HallView = ({ hall }) => {
               );
             })}
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-            ml="1rem"
-          >
-            {hall.plan.map((seat, index) => {
-              return (
-                <IconButton
-                  id={index}
-                  aria-label="delete"
-                  size="medium"
-                  onClick={handleDelete}
-                >
-                  <DeleteIcon
-                    fontSize="inherit"
-                    sx={{ color: "#E10050", margin: "-0.05rem" }}
-                  />
-                </IconButton>
-              );
-            })}
-          </Box>
+          {role === ADMIN && (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+              ml="1rem"
+            >
+              {currentHall.plan.map((seat, index) => {
+                return (
+                  <IconButton
+                    aria-label="delete"
+                    size="medium"
+                    onClick={handleDelete}
+                    id={index}
+                  >
+                    <DeleteIcon
+                      fontSize="inherit"
+                      sx={{ color: "#E10050", margin: "-0.05rem" }}
+                    />
+                  </IconButton>
+                );
+              })}
+            </Box>
+          )}
         </Box>
         <Box
           sx={{
@@ -98,11 +109,11 @@ const HallView = ({ hall }) => {
           }}
         >
           <Typography variant="body1" mt="2rem">
-            Total rows: {hall.plan.length}
+            Total rows: {currentHall.plan.length}
           </Typography>
           <Typography variant="body1" mt="2rem">
             Total seats:
-            {hall.plan.reduce((result, row) => result + row.length, 0)}
+            {currentHall.plan.reduce((result, row) => result + row.length, 0)}
           </Typography>
         </Box>
       </Box>
@@ -112,10 +123,12 @@ const HallView = ({ hall }) => {
 
 HallView.defaultProps = {
   hall: [],
+  role: null,
 };
 
 HallView.propTypes = {
   hall: PropTypes.object,
+  role: PropTypes.string,
 };
 
 export default HallView;

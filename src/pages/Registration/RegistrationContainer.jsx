@@ -13,7 +13,7 @@ const RegistrationContainer = () => {
   const citiesList = useSelector(selectCityData);
 
   useEffect(() => {
-    dispatch(cityFetch(citiesList));
+    dispatch(cityFetch());
   }, []);
 
   //think of it

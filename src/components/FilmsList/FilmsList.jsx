@@ -10,9 +10,8 @@ const FilmsList = () => {
   const filmsList = useSelector(selectFilmData);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(filmFetch(filmsList));
+    dispatch(filmFetch());
   }, []);
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
