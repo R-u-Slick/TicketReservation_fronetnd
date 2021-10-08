@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { PropTypes } from "prop-types";
 import {
@@ -50,13 +50,30 @@ const Halls = ({ selectedCinema, role, seats }) => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await formatRequest(
-        "/hall",
-        "PATCH",
-        token,
-        currentHall
-      );
-      dispatch(cinemaFetchUpdate());
+      if (currentHallId) {
+        const response = await formatRequest(
+          "/hall",
+          "PATCH",
+          token,
+          currentHall
+        );
+        dispatch(cinemaFetchUpdate());
+      } else {
+        const response = await formatRequest(
+          "/hall",
+          "POST",
+          token,
+          currentHall
+        );
+        const mongoId = response.data;
+        const newHall = { ...currentHall, _id: mongoId };
+        const hallsList = [...selectedCinema.halls];
+        hallsList.push(newHall);
+        const updatedCinema = { ...selectedCinema, halls: hallsList };
+        await formatRequest("/cinema", "PATCH", token, updatedCinema);
+        dispatch(cinemaFetchUpdate());
+        setCurrentHallId(mongoId);
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -70,6 +87,27 @@ const Halls = ({ selectedCinema, role, seats }) => {
 
   const handleNewHall = () => {
     const hallName = prompt("Please, enter a hall name");
+    if (hallName) {
+      const newHall = {
+        name: hallName,
+        plan: [],
+      };
+      setCurrentHallId("");
+      setCurrentHall(newHall);
+    }
+  };
+
+  const handleDeleteHall = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await formatRequest("/hall", "DELETE", token, {
+        id: currentHallId,
+      });
+      dispatch(cinemaFetchUpdate());
+      setCurrentHall("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -90,7 +128,6 @@ const Halls = ({ selectedCinema, role, seats }) => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
             }}
           >
             <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -116,9 +153,26 @@ const Halls = ({ selectedCinema, role, seats }) => {
               <FormHelperText>Please, choose a hall</FormHelperText>
             </FormControl>
             {role === ADMIN && (
-              <Button variant="outlined" onClick={handleNewHall}>
-                Add a new hall
-              </Button>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignContent: "center",
+                  height: 80,
+                }}
+              >
+                <Button variant="outlined" onClick={handleNewHall} mb="1rem">
+                  Add a new hall
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={handleDeleteHall}
+                >
+                  Delete a hall
+                </Button>
+              </Box>
             )}
           </Box>
         </Grid>
@@ -136,7 +190,7 @@ const Halls = ({ selectedCinema, role, seats }) => {
         </Grid>
         <Grid item xs={2} />
         <Grid item xs={10}>
-          {role === ADMIN && currentHallId && (
+          {role === ADMIN && currentHall && (
             <HallEdit
               seats={seats}
               onAddRow={handleAddRow}
