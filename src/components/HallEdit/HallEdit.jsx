@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 
 const HallEdit = ({ seats, onAddRow, onCancel, onSave }) => {
+  const MAX_SEATS = 20;
   const [seatTypeId, setSeatTypeId] = useState("");
   const [currentSeatNumber, setCurrentSeatNumber] = useState("");
   const [currentSeatType, setCurrentSeatType] = useState("");
@@ -23,7 +24,7 @@ const HallEdit = ({ seats, onAddRow, onCancel, onSave }) => {
 
   const handleSeatNumberChange = (event) => {
     const seatNumber = Number(event.target.value);
-    if (seatNumber > 0 && seatNumber <= 20) {
+    if (seatNumber > 0 && seatNumber <= MAX_SEATS) {
       setCurrentSeatNumber(event.target.value);
       setSeatError(false);
       return;
@@ -103,7 +104,11 @@ const HallEdit = ({ seats, onAddRow, onCancel, onSave }) => {
                 <em>None</em>
               </MenuItem>
               {seats.map((seat) => {
-                return <MenuItem value={seat._id}>{seat.name}</MenuItem>;
+                return (
+                  <MenuItem key={seat._id} value={seat._id}>
+                    {seat.name}
+                  </MenuItem>
+                );
               })}
             </Select>
             {seatTypeError && (

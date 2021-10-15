@@ -17,7 +17,7 @@ const LoginContainer = () => {
         setError("Please fill all text fileds");
         return;
       }
-      const response = await formatRequest("/login", "POST", null, data);
+      const response = await formatRequest("/login", "POST", data);
       if (response.err) {
         setError(response.err);
         return;

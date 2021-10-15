@@ -1,9 +1,8 @@
 import { Container, Typography, Box, IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PropTypes } from "prop-types";
-import { useState, useEffect } from "react";
-import { ADMIN, CLIENT } from "../../constants/roles";
-import HallEdit from "../../components/HallEdit/HallEdit";
+import { ADMIN } from "../../constants/roles";
+import { v4 as uuidv4 } from "uuid";
 
 const HallView = ({ plan, role, onDeleteRow }) => {
   const handleDeleteRow = (event) => {
@@ -38,7 +37,7 @@ const HallView = ({ plan, role, onDeleteRow }) => {
             mr="1rem"
           >
             {plan.map((row, index) => (
-              <Typography key={index} variant="h6" sx={{ margin: "0.2rem" }}>
+              <Typography key={uuidv4()} variant="h6" sx={{ margin: "0.2rem" }}>
                 {index + 1}
               </Typography>
             ))}
@@ -52,10 +51,11 @@ const HallView = ({ plan, role, onDeleteRow }) => {
           >
             {plan.map((row) => {
               return (
-                <Box sx={{ display: "inline-flex" }}>
+                <Box key={uuidv4()} sx={{ display: "inline-flex" }}>
                   {row.map((seat) => {
                     return (
                       <Box
+                        key={uuidv4()}
                         sx={{
                           margin: "0.2rem",
                           background: seat.color,
@@ -81,6 +81,7 @@ const HallView = ({ plan, role, onDeleteRow }) => {
               {plan.map((seat, index) => {
                 return (
                   <IconButton
+                    key={uuidv4()}
                     aria-label="delete"
                     size="medium"
                     onClick={handleDeleteRow}

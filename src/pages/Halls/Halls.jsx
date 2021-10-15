@@ -49,28 +49,17 @@ const Halls = ({ selectedCinema, role, seats }) => {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem("token");
       if (currentHallId) {
-        const response = await formatRequest(
-          "/hall",
-          "PATCH",
-          token,
-          currentHall
-        );
+        const response = await formatRequest("/hall", "PATCH", currentHall);
         dispatch(cinemaFetchUpdate());
       } else {
-        const response = await formatRequest(
-          "/hall",
-          "POST",
-          token,
-          currentHall
-        );
+        const response = await formatRequest("/hall", "POST", currentHall);
         const mongoId = response.data;
         const newHall = { ...currentHall, _id: mongoId };
         const hallsList = [...selectedCinema.halls];
         hallsList.push(newHall);
         const updatedCinema = { ...selectedCinema, halls: hallsList };
-        await formatRequest("/cinema", "PATCH", token, updatedCinema);
+        await formatRequest("/cinema", "PATCH", updatedCinema);
         dispatch(cinemaFetchUpdate());
         setCurrentHallId(mongoId);
       }
@@ -98,9 +87,8 @@ const Halls = ({ selectedCinema, role, seats }) => {
   };
 
   const handleDeleteHall = async () => {
-    const token = localStorage.getItem("token");
     try {
-      const response = await formatRequest("/hall", "DELETE", token, {
+      const response = await formatRequest("/hall", "DELETE", {
         id: currentHallId,
       });
       dispatch(cinemaFetchUpdate());

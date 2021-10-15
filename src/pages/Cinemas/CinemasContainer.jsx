@@ -52,9 +52,8 @@ const CinemasContainer = () => {
   };
 
   const handleDeleteCinema = async (cinema) => {
-    const token = localStorage.getItem("token");
     try {
-      await formatRequest("/cinema", "DELETE", token, { id: cinema._id });
+      await formatRequest("/cinema", "DELETE", { id: cinema._id });
       dispatch(cinemaFetchUpdate());
     } catch (err) {
       console.log(err);

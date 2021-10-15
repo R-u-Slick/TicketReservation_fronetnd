@@ -30,7 +30,7 @@ const RegistrationContainer = () => {
         setError(["Please fill all text fileds"]);
         return;
       }
-      const response = await formatRequest("/user", "POST", null, data);
+      const response = await formatRequest("/user", "POST", data);
       if (response.err) {
         let errorsList = [];
         for (let key in response.err) {
