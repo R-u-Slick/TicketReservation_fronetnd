@@ -1,7 +1,8 @@
 const HOST = "http://localhost:3000";
 
-async function formatRequest(path, method, token, data) {
+async function formatRequest(path, method, data) {
   const url = HOST + path;
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(url, {
       method,

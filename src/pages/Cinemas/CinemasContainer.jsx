@@ -9,14 +9,17 @@ import {
   MenuItem,
   FormHelperText,
   FormControl,
+  Button,
 } from "@material-ui/core";
 import Cinemas from "./Cinemas";
 import { selectCinemaData } from "../../store/cinema/selectors";
 import { selectCityData } from "../../store/city/selectors";
 import { selectUserData } from "../../store/user/selectors";
-import cinemaFetch from "../../store/cinema/asyncActions";
+import { cinemaFetch } from "../../store/cinema/asyncActions";
 import { cityFetch } from "../../store/city/asyncActions";
 import Header from "../../components/Header/HeaderContainer";
+import formatRequest from "../../helpers/formatRequest";
+import { cinemaFetchUpdate } from "../../store/cinema/asyncActions";
 
 const CinemasContainer = () => {
   const userData = useSelector(selectUserData);
@@ -31,6 +34,12 @@ const CinemasContainer = () => {
     dispatch(cityFetch());
   }, []);
 
+  useEffect(() => {
+    setFilteredCinemas(
+      cinemasList.filter((cinema) => cinema.city._id === currentCityId)
+    );
+  }, [cinemasList]);
+
   const handleCityChange = (event) => {
     setCurrentCityId(event.target.value);
     if (!event.target.value) {
@@ -41,6 +50,16 @@ const CinemasContainer = () => {
       cinemasList.filter((cinema) => cinema.city._id === event.target.value)
     );
   };
+
+  const handleDeleteCinema = async (cinema) => {
+    try {
+      await formatRequest("/cinema", "DELETE", { id: cinema._id });
+      dispatch(cinemaFetchUpdate());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -54,7 +73,7 @@ const CinemasContainer = () => {
             <Typography variant="h2">Cinemas</Typography>
           </Grid>
           <Grid item xs={12}>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <FormControl sx={{ mt: 1, mr: 3, minWidth: 120 }}>
               <InputLabel id="selectCityLabel">City</InputLabel>
               <Select
                 labelId="selectCityLabel"
@@ -63,9 +82,7 @@ const CinemasContainer = () => {
                 label="Age"
                 onChange={handleCityChange}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
+                <MenuItem value="">Show all</MenuItem>
                 {citiesList.map((city) => {
                   return (
                     <MenuItem key={city._id} value={city._id}>
@@ -76,6 +93,9 @@ const CinemasContainer = () => {
               </Select>
               <FormHelperText>Please, choose a city</FormHelperText>
             </FormControl>
+            <FormControl sx={{ height: 70, justifyContent: "center" }}>
+              <Button variant="outlined">Add a cinema</Button>
+            </FormControl>
           </Grid>
           {filteredCinemas.map((cinema) => {
             return (
@@ -83,6 +103,7 @@ const CinemasContainer = () => {
                 key={cinema._id}
                 cinema={cinema}
                 role={userData ? userData.role : ""}
+                onDeleteCinema={handleDeleteCinema}
               />
             );
           })}

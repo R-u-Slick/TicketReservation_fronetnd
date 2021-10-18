@@ -7,7 +7,7 @@ export function userFetch() {
     return { type: null };
   }
   return async function (dispatch) {
-    const response = await formatRequest("/users/me", "GET", token);
+    const response = await formatRequest("/users/me", "GET");
     if (response.err) {
       return dispatch(setUserErrorAction(response.err));
     }

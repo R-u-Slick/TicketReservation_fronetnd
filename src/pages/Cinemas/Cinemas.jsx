@@ -5,7 +5,11 @@ import "./Cinemas.scss";
 import { CLIENT, ADMIN } from "../../constants/roles";
 import { Link } from "react-router-dom";
 
-const Cinemas = ({ cinema, role }) => {
+const Cinemas = ({ cinema, role, onDeleteCinema }) => {
+  const handleDeleteCinema = () => {
+    onDeleteCinema(cinema);
+  };
+
   return (
     <>
       <Grid item xs={4}>
@@ -28,6 +32,15 @@ const Cinemas = ({ cinema, role }) => {
               {role === ADMIN ? "Edit halls" : "View halls"}
             </Button>
           </Link>
+          {role === ADMIN && (
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={handleDeleteCinema}
+            >
+              Delete cinema
+            </Button>
+          )}
         </Stack>
       </Grid>
     </>
@@ -36,11 +49,13 @@ const Cinemas = ({ cinema, role }) => {
 
 Cinemas.defaultProps = {
   role: "",
+  onDeleteCinema: () => {},
 };
 
 Cinemas.propTypes = {
   cinema: PropTypes.object.isRequired,
   role: PropTypes.string,
+  onDeleteCinema: PropTypes.func,
 };
 
 export default Cinemas;
