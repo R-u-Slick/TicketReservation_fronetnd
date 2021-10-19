@@ -26,21 +26,19 @@ const PagesRouter = () => {
     }
   }, [userData]);
   return (
-    <React.Fragment>
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/schedule" component={Schedule} />
-        <Route path="/films/:id" component={FilmInfoContainer} />
-        <Route path="/halls/:id" component={HallsContainer} />
-        <Route exact path="/movies" component={Movies} />
-        <Route exact path="/cinemas" component={Cinemas} />
-        <Route exact path="/cinemas/editor/:id" component={CinemaEditor}>
-          {role !== ADMIN && <Redirect to="/login" />}
-        </Route>
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/registration" component={RegistrationPage} />
-      </Switch>
-    </React.Fragment>
+    <Switch>
+      <Route exact path="/" component={Main} />
+      <Route exact path="/schedule" component={Schedule} />
+      <Route path="/films/:id" component={FilmInfoContainer} />
+      <Route path="/halls/:id" component={HallsContainer} />
+      <Route exact path="/movies" component={Movies} />
+      <Route exact path="/cinemas" component={Cinemas} />
+      <Route exact path="/cinemas/editor/:id" component={CinemaEditor}>
+        {role !== ADMIN && <Redirect to="/login" />}
+      </Route>
+      <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/registration" component={RegistrationPage} />
+    </Switch>
   );
 };
 
