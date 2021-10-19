@@ -33,6 +33,14 @@ const Cinemas = ({ cinema, role, onDeleteCinema }) => {
             </Button>
           </Link>
           {role === ADMIN && (
+            <Link
+              to={`/cinemas/editor/${cinema._id}`}
+              className="cinemas__button"
+            >
+              <Button variant="outlined">Edit cinema</Button>
+            </Link>
+          )}
+          {role === ADMIN && (
             <Button
               variant="outlined"
               color="error"

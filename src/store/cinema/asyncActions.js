@@ -16,7 +16,7 @@ export function cinemaFetch() {
       }
       dispatch(setCinemaAction(response.data));
     } catch (err) {
-      setCinemaErrorAction(err.message);
+      return dispatch(setCinemaErrorAction(err.message));
     }
   };
 }
@@ -30,7 +30,21 @@ export function cinemaFetchUpdate() {
       }
       dispatch(setCinemaAction(response.data));
     } catch (err) {
-      setCinemaErrorAction(err.message);
+      return dispatch(setCinemaErrorAction(err.message));
+    }
+  };
+}
+
+export function cinemaPatch() {
+  return async function (dispatch) {
+    try {
+      const response = await formatRequest("/cinema", "Patch");
+      if (response.err) {
+        return dispatch(setCinemaErrorAction(response.err));
+      }
+      dispatch(setCinemaAction(response.data));
+    } catch (err) {
+      return dispatch(setCinemaErrorAction(err.message));
     }
   };
 }
