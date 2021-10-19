@@ -20,6 +20,8 @@ import { cityFetch } from "../../store/city/asyncActions";
 import Header from "../../components/Header/HeaderContainer";
 import formatRequest from "../../helpers/formatRequest";
 import { cinemaFetchUpdate } from "../../store/cinema/asyncActions";
+import { Link } from "react-router-dom";
+import { ADMIN, CLIENT } from "../../constants/roles";
 
 const CinemasContainer = () => {
   const userData = useSelector(selectUserData);
@@ -27,6 +29,7 @@ const CinemasContainer = () => {
   const citiesList = useSelector(selectCityData);
   const [currentCityId, setCurrentCityId] = useState("");
   const [filteredCinemas, setFilteredCinemas] = useState(cinemasList);
+  const [role, setRole] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,9 +38,21 @@ const CinemasContainer = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredCinemas(
-      cinemasList.filter((cinema) => cinema.city._id === currentCityId)
-    );
+    if (userData) {
+      setRole(userData.role);
+    } else {
+      setRole(null);
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (currentCityId) {
+      setFilteredCinemas(
+        cinemasList.filter((cinema) => cinema.city._id === currentCityId)
+      );
+    } else {
+      setFilteredCinemas(cinemasList);
+    }
   }, [cinemasList]);
 
   const handleCityChange = (event) => {
@@ -94,7 +109,11 @@ const CinemasContainer = () => {
               <FormHelperText>Please, choose a city</FormHelperText>
             </FormControl>
             <FormControl sx={{ height: 70, justifyContent: "center" }}>
-              <Button variant="outlined">Add a cinema</Button>
+              <Link to="/cinemas/editor/newCinema" className="cinemas__button">
+                {role === ADMIN && (
+                  <Button variant="outlined">Add a cinema</Button>
+                )}
+              </Link>
             </FormControl>
           </Grid>
           {filteredCinemas.map((cinema) => {
@@ -102,7 +121,7 @@ const CinemasContainer = () => {
               <Cinemas
                 key={cinema._id}
                 cinema={cinema}
-                role={userData ? userData.role : ""}
+                role={role}
                 onDeleteCinema={handleDeleteCinema}
               />
             );
