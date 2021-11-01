@@ -20,3 +20,17 @@ export function sessionFetch() {
     }
   };
 }
+
+export function sessionFetchUpdate() {
+  return async function (dispatch) {
+    try {
+      const response = await formatRequest("/session", "GET");
+      if (response.err) {
+        return dispatch(setSessionErrorAction(response.err));
+      }
+      dispatch(setSessionAction(response.data));
+    } catch (err) {
+      return dispatch(setSessionErrorAction(err.message));
+    }
+  };
+}

@@ -1,6 +1,8 @@
+import React from "react";
 import { Grid, Typography, Fab } from "@material-ui/core";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { PropTypes } from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 
 function ExtrasInfo({ orderedGoodsList, onDeleteGood }) {
   return (
@@ -11,7 +13,7 @@ function ExtrasInfo({ orderedGoodsList, onDeleteGood }) {
         </Grid>
         {orderedGoodsList.map((goodPrice) => {
           return (
-            <>
+            <React.Fragment key={uuidv4()}>
               <Grid item xs={4}>
                 <Typography variant="body1">{goodPrice.good.name}</Typography>
               </Grid>
@@ -31,7 +33,7 @@ function ExtrasInfo({ orderedGoodsList, onDeleteGood }) {
                   <RemoveIcon />
                 </Fab>
               </Grid>
-            </>
+            </React.Fragment>
           );
         })}
       </Grid>

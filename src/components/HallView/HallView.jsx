@@ -66,25 +66,30 @@ const HallView = ({ plan, role, onDeleteRow, onSeatClick }) => {
                   {row.map((seat, seatIndex) => {
                     if (seat.selected) {
                       return (
-                        <Box
+                        <Tooltip
+                          title="Reserved"
                           key={String(rowIndex) + "_" + seatIndex}
-                          id={String(rowIndex) + "_" + seatIndex}
-                          sx={{
-                            margin: "0.2rem",
-                            background: seat.color,
-                            width: `${2 * seat.capacity}rem`,
-                            height: "2rem",
-                            borderRadius: seat.capacity > 1 ? "1rem" : "50%",
-                            cursor: "pointer",
-                            opacity: "50%",
-                          }}
-                        />
+                        >
+                          <Box
+                            id={String(rowIndex) + "_" + seatIndex}
+                            sx={{
+                              margin: "0.2rem",
+                              background: seat.color,
+                              width: `${2 * seat.capacity}rem`,
+                              height: "2rem",
+                              borderRadius: seat.capacity > 1 ? "1rem" : "50%",
+                              opacity: "50%",
+                            }}
+                          />
+                        </Tooltip>
                       );
                     }
                     return (
-                      <Tooltip title={seat.name}>
+                      <Tooltip
+                        title={seat.name}
+                        key={String(rowIndex) + "_" + seatIndex}
+                      >
                         <Box
-                          key={String(rowIndex) + "_" + seatIndex}
                           id={String(rowIndex) + "_" + seatIndex}
                           sx={{
                             margin: "0.2rem",

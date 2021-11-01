@@ -8,21 +8,33 @@ import { selectSessionData } from "../../store/session/selectors";
 import Header from "../../components/Header/HeaderContainer";
 import Schedule from "./Schedule";
 import { Link } from "react-router-dom";
+import orderTimeoutCheck from "../../helpers/orderTimeoutCheck";
 
 const ScheduleContainer = () => {
   const dispatch = useDispatch();
   const sessionState = useSelector(selectSessionData);
-  const [sessionData, setSessionData] = useState(sessionState);
+  const [sessionList, setSessionList] = useState(sessionState);
   const [selectedSessionId, setSelectedSessionId] = useState("");
+  console.log(sessionState);
 
   useEffect(() => {
     dispatch(sessionFetch());
-    setSessionData(sessionState);
+  }, []);
+
+  useEffect(() => {
+    if (sessionState.length) {
+      const sessionData = orderTimeoutCheck(sessionState);
+      setSessionList(sessionData);
+    }
   }, [sessionState]);
 
   const handleRowSelect = (selectedRowId) => {
     setSelectedSessionId(selectedRowId);
   };
+
+  if (!sessionList.length) {
+    return null;
+  }
 
   return (
     <>
@@ -54,7 +66,7 @@ const ScheduleContainer = () => {
             </Link>
           </Grid>
           <Grid item xs={12}>
-            <Schedule sessions={sessionData} onRowSelect={handleRowSelect} />
+            <Schedule sessions={sessionList} onRowSelect={handleRowSelect} />
           </Grid>
         </Grid>
       </Container>

@@ -8,6 +8,17 @@ const Schedule = ({ sessions, onRowSelect }) => {
   useEffect(() => {
     if (sessions.length) {
       const rows = sessions.map((session) => {
+        const totalSeats = session.hall.plan.reduce(
+          (total, row) => total + row.length,
+          0
+        );
+        const seatsReserved = session.orders.reduce((total, order) => {
+          return (
+            total +
+            (order.status === "reserved" || order.status === "paid" ? 1 : 0)
+          );
+        }, 0);
+        const seatsAvailable = totalSeats - seatsReserved;
         return {
           id: session._id,
           col1: session.cinema.name,
@@ -16,6 +27,7 @@ const Schedule = ({ sessions, onRowSelect }) => {
           col4: session.hall.name,
           col5: new Date(session.date),
           col6: new Date(session.date).toLocaleTimeString(),
+          col7: seatsAvailable,
         };
       });
       setRows(rows);

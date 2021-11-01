@@ -17,8 +17,10 @@ import { Box } from "@material-ui/system";
 import { v4 as uuidv4 } from "uuid";
 import SeatsInfo from "../../components/SeatsInfo/SeatsInfo";
 import ExtrasInfo from "../../components/ExtrasInfo/ExtrasInfo";
+import { RESERVED } from "../../constants/status";
+import { Link, Redirect } from "react-router-dom";
 
-const NewOrder = ({ session, role }) => {
+const NewOrder = ({ session, role, onNewOrder, orderId }) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [currentGoodId, setCurrentGoodId] = useState("");
   const [orderedGoodsList, setOrderedGoodsList] = useState([]);
@@ -26,7 +28,19 @@ const NewOrder = ({ session, role }) => {
 
   useEffect(() => {
     if (session) {
-      setCurrentPlan(session.hall.plan);
+      const plan = JSON.parse(JSON.stringify(session.hall.plan));
+      const orders = session.orders;
+      console.log(orders);
+      orders.forEach((order) => {
+        if (order.status === "reserved" || order.status === "paid") {
+          order.selectedSeats.forEach((place) => {
+            const row = place.coordinate.row;
+            const seat = place.coordinate.seat;
+            plan[row][seat].selected = true;
+          });
+        }
+      });
+      setCurrentPlan(plan);
     }
   }, [session]);
 
@@ -53,13 +67,15 @@ const NewOrder = ({ session, role }) => {
     const currentGoodPrice = session.goodPrice.find(
       (goodPrice) => goodPrice._id === currentGoodId
     );
-    setOrderedGoodsList([...orderedGoodsList, currentGoodPrice]);
+    if (currentGoodPrice) {
+      setOrderedGoodsList([...orderedGoodsList, currentGoodPrice]);
+    }
   };
 
   const handleDeleteGood = (event) => {
     const deletedGoodId = event.currentTarget.id;
     const goods = [...orderedGoodsList];
-    for (let i = 0; i < orderedGoodsList.length; i++) {
+    for (let i = 0; i < goods.length; i++) {
       if (orderedGoodsList[i]._id === deletedGoodId) {
         goods.splice(i, 1);
         break;
@@ -71,7 +87,7 @@ const NewOrder = ({ session, role }) => {
   const handleDeleteSeat = (event) => {
     const deletedSeatId = event.currentTarget.id;
     const seats = [...selectedSeats];
-    for (let i = 0; i < selectedSeats.length; i++) {
+    for (let i = 0; i < seats.length; i++) {
       if (selectedSeats[i].id === deletedSeatId) {
         const seat = seats.splice(i, 1)[0];
         const plan = JSON.parse(JSON.stringify(currentPlan));
@@ -83,9 +99,19 @@ const NewOrder = ({ session, role }) => {
     }
   };
 
-  if (!session) {
-    return null;
+  const handleNewOrder = () => {
+    const newOrder = {
+      selectedSeats,
+      orderedGoods: orderedGoodsList,
+      status: RESERVED,
+    };
+    onNewOrder(newOrder);
+  };
+
+  if (orderId) {
+    return <Redirect to={`/confirmOrder/${orderId}`} />;
   }
+
   return (
     <Container
       sx={{
@@ -178,7 +204,11 @@ const NewOrder = ({ session, role }) => {
                   </Grid>
                   <Grid item xs={8} />
                   <Grid item xs={4}>
-                    <Button variant="contained" sx={{ width: "100%" }}>
+                    <Button
+                      variant="contained"
+                      sx={{ width: "100%" }}
+                      onClick={handleNewOrder}
+                    >
                       Create an order
                     </Button>
                   </Grid>
@@ -195,11 +225,15 @@ const NewOrder = ({ session, role }) => {
 NewOrder.defaultProps = {
   session: null,
   role: "",
+  onNewOrder: () => {},
+  orderId: "",
 };
 
 NewOrder.propTypes = {
   session: PropTypes.object,
   role: PropTypes.string,
+  onNewOrder: PropTypes.func,
+  orderId: PropTypes.string,
 };
 
 export default NewOrder;

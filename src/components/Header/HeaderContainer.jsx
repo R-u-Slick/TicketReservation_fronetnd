@@ -17,6 +17,7 @@ const HeaderContainer = () => {
     <Header
       role={userData.role}
       name={userData.firstName}
+      userId={userData._id}
       onLogout={handleLogout}
     />
   );

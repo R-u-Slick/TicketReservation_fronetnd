@@ -15,6 +15,8 @@ import CinemaEditor from "../pages/CinemaEditor/CinemaEditorContainer";
 import NewOrder from "../pages/NewOrder/NewOrderContainer";
 import { selectUserData } from "../store/user/selectors";
 import { ADMIN, CLIENT } from "../constants/roles";
+import ConfirmOrder from "../pages/ConfirmOrder/ConfirmOrderContainer";
+import OrdersList from "../pages/OrdersList/OrdersListContainer";
 
 const PagesRouter = () => {
   const userData = useSelector(selectUserData);
@@ -35,6 +37,7 @@ const PagesRouter = () => {
       <Route path="/newOrder/:id" component={NewOrder}>
         {role !== CLIENT && <Redirect to="/login" />}
       </Route>
+      <Route exact path="/confirmOrder/:id" component={ConfirmOrder} />
       <Route exact path="/movies" component={Movies} />
       <Route exact path="/cinemas" component={Cinemas} />
       <Route exact path="/cinemas/editor/:id" component={CinemaEditor}>
@@ -42,6 +45,7 @@ const PagesRouter = () => {
       </Route>
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/registration" component={RegistrationPage} />
+      <Route path="/ordersList/:id" component={OrdersList} />
     </Switch>
   );
 };
