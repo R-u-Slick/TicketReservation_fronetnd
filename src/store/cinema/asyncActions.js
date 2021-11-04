@@ -1,6 +1,6 @@
 import { setCinemaAction, setCinemaErrorAction } from "./slice";
 import formatRequest from "../../helpers/formatRequest";
-import { selectCinemaData } from "../../store/cinema/selectors";
+import { selectCinemaData } from "./selectors";
 
 export function cinemaFetch() {
   return async function (dispatch, getState) {

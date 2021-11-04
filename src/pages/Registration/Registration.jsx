@@ -53,7 +53,15 @@ export default function Registration({ error, onSubmit, cities }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = { firstName, lastName, email, password, city, role };
+    const data = {
+      firstName,
+      lastName,
+      email,
+      password,
+      city,
+      role,
+      order: [],
+    };
     onSubmit(data);
   };
 

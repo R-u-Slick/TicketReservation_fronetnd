@@ -3,11 +3,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { PropTypes } from "prop-types";
 import { ADMIN } from "../../constants/roles";
 import { v4 as uuidv4 } from "uuid";
+import { Tooltip } from "@material-ui/core";
 
-const HallView = ({ plan, role, onDeleteRow }) => {
+const HallView = ({ plan, role, onDeleteRow, onSeatClick }) => {
   const handleDeleteRow = (event) => {
     const deletedRowId = event.currentTarget.id;
     onDeleteRow(deletedRowId);
+  };
+
+  const handleSeatClick = (event) => {
+    const coordinateId = event.currentTarget.id.split("_");
+    const coordinate = {
+      row: coordinateId[0],
+      seat: coordinateId[1],
+    };
+    const seat = plan[coordinate.row][coordinate.seat];
+    onSeatClick(seat, coordinate);
   };
 
   return (
@@ -49,21 +60,48 @@ const HallView = ({ plan, role, onDeleteRow }) => {
               flexDirection: "column",
             }}
           >
-            {plan.map((row) => {
+            {plan.map((row, rowIndex) => {
               return (
                 <Box key={uuidv4()} sx={{ display: "inline-flex" }}>
-                  {row.map((seat) => {
+                  {row.map((seat, seatIndex) => {
+                    if (seat.selected) {
+                      return (
+                        <Tooltip
+                          title="Reserved"
+                          key={String(rowIndex) + "_" + seatIndex}
+                        >
+                          <Box
+                            id={String(rowIndex) + "_" + seatIndex}
+                            sx={{
+                              margin: "0.2rem",
+                              background: seat.color,
+                              width: `${2 * seat.capacity}rem`,
+                              height: "2rem",
+                              borderRadius: seat.capacity > 1 ? "1rem" : "50%",
+                              opacity: "50%",
+                            }}
+                          />
+                        </Tooltip>
+                      );
+                    }
                     return (
-                      <Box
-                        key={uuidv4()}
-                        sx={{
-                          margin: "0.2rem",
-                          background: seat.color,
-                          width: `${2 * seat.capacity}rem`,
-                          height: "2rem",
-                          borderRadius: seat.capacity > 1 ? "1rem" : "50%",
-                        }}
-                      />
+                      <Tooltip
+                        title={seat.name}
+                        key={String(rowIndex) + "_" + seatIndex}
+                      >
+                        <Box
+                          id={String(rowIndex) + "_" + seatIndex}
+                          sx={{
+                            margin: "0.2rem",
+                            background: seat.color,
+                            width: `${2 * seat.capacity}rem`,
+                            height: "2rem",
+                            borderRadius: seat.capacity > 1 ? "1rem" : "50%",
+                            cursor: "pointer",
+                          }}
+                          onClick={handleSeatClick}
+                        />
+                      </Tooltip>
                     );
                   })}
                 </Box>
@@ -122,12 +160,14 @@ HallView.defaultProps = {
   plan: [],
   role: null,
   onDeleteRow: () => {},
+  onSeatClick: () => {},
 };
 
 HallView.propTypes = {
   plan: PropTypes.array,
   role: PropTypes.string,
   onDeleteRow: PropTypes.func,
+  onSeatClick: PropTypes.func,
 };
 
 export default HallView;

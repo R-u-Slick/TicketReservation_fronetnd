@@ -1,19 +1,22 @@
 import { Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Main from "../pages/Main/MainContainer";
 import LoginPage from "../pages/Login/LoginContainer";
 import RegistrationPage from "../pages/Registration/RegistrationContainer";
-import Schedule from "../pages/Schedule";
+import Schedule from "../pages/Schedule/ScheduleContainer";
 import Movies from "../pages/Movies";
 import Cinemas from "../pages/Cinemas/CinemasContainer";
 import FilmInfoContainer from "../pages/FilmInfo/FilmInfoContainer";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch, Redirect } from "react-router-dom";
 import HallsContainer from "../pages/Halls/HallsContainer";
 import CinemaEditor from "../pages/CinemaEditor/CinemaEditorContainer";
+import NewOrder from "../pages/NewOrder/NewOrderContainer";
 import { selectUserData } from "../store/user/selectors";
 import { ADMIN, CLIENT } from "../constants/roles";
+import ConfirmOrder from "../pages/ConfirmOrder/ConfirmOrderContainer";
+import OrdersList from "../pages/OrdersList/OrdersListContainer";
 
 const PagesRouter = () => {
   const userData = useSelector(selectUserData);
@@ -31,6 +34,10 @@ const PagesRouter = () => {
       <Route exact path="/schedule" component={Schedule} />
       <Route path="/films/:id" component={FilmInfoContainer} />
       <Route path="/halls/:id" component={HallsContainer} />
+      <Route path="/newOrder/:id" component={NewOrder}>
+        {role !== CLIENT && <Redirect to="/login" />}
+      </Route>
+      <Route exact path="/confirmOrder/:id" component={ConfirmOrder} />
       <Route exact path="/movies" component={Movies} />
       <Route exact path="/cinemas" component={Cinemas} />
       <Route exact path="/cinemas/editor/:id" component={CinemaEditor}>
@@ -38,6 +45,7 @@ const PagesRouter = () => {
       </Route>
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/registration" component={RegistrationPage} />
+      <Route path="/ordersList/:id" component={OrdersList} />
     </Switch>
   );
 };

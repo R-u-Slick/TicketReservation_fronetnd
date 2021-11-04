@@ -2,7 +2,7 @@ import "./Header.scss";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const Header = ({ role, name, onLogout }) => {
+const Header = ({ role, name, userId, onLogout }) => {
   const handleLogout = () => {
     onLogout();
   };
@@ -33,7 +33,12 @@ const Header = ({ role, name, onLogout }) => {
           <li className="navigation__element">
             {role ? (
               <div className="navigation__element__user">
-                <div>{"Hello, " + name}</div>
+                <NavLink
+                  to={`/ordersList/${userId}`}
+                  className="navigation__link"
+                >
+                  <div>{"Hello, " + name}</div>
+                </NavLink>
                 <div className="navigation__element__user__role">
                   logged as {role}
                 </div>
@@ -56,12 +61,14 @@ const Header = ({ role, name, onLogout }) => {
 Header.defaultProps = {
   role: "",
   name: "",
+  userId: "",
   onLogout: () => {},
 };
 
 Header.propTypes = {
   role: PropTypes.string,
   name: PropTypes.string,
+  userId: PropTypes.string,
   onLogout: PropTypes.func,
 };
 
